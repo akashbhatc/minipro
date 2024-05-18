@@ -7,6 +7,9 @@ const Signup = () => {
   const [userType, setUserType] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [Usn, setUsn] = useState('');
+  const [sfname, setsfname] = useState('');
+  const [slname, setslname] = useState('');
+  const [passout, setpassout] = useState('');
   const handleSignup = (e) => {
     e.preventDefault();
     console.log('Signing up...');
@@ -100,9 +103,48 @@ const Signup = () => {
                 <input
                   type="text"
                   id="usn"
-                  placeholder="usn"
+                  placeholder="USN"
                   value={Usn}
                   onChange={(e) => setUsn(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            )}
+            {userType !== 'ADMIN' && (
+              <div className="flex flex-col pt-4">
+                <label htmlFor="companyName" className="text-lg">first name </label>
+                <input
+                  type="text"
+                  id="firstname"
+                  placeholder="Enter your first name"
+                  value={sfname}
+                  onChange={(e) => setsfname(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            )}
+            {userType !== 'ADMIN' && (
+              <div className="flex flex-col pt-4">
+                <label htmlFor="companyName" className="text-lg">last name </label>
+                <input
+                  type="text"
+                  id="lastname"
+                  placeholder="Enter your last name"
+                  value={slname}
+                  onChange={(e) => setslname(e.target.value)}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+            )}
+            {userType !== 'ADMIN' && (
+              <div className="flex flex-col pt-4">
+                <label htmlFor="companyName" className="text-lg">passout year</label>
+                <input
+                  type="text"
+                  id="passout"
+                  placeholder="Passout year"
+                  value={passout}
+                  onChange={(e) => setpassout(e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
@@ -115,8 +157,8 @@ const Signup = () => {
           )};
         </div>
       </div>
-      <div className="w-2/3 md:w-1/2 h=fit shadow-2xl">
-        <img className="w-full h-screen md:block float-center " src="https://images.pexels.com/photos/911758/pexels-photo-911758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background" />
+      <div className="w-2/3 md:w-1/2 shadow-2xl">
+        <img className="w-full h-full md:block float-center " src="https://images.pexels.com/photos/911758/pexels-photo-911758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background" />
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Navbar } from './Studentcomponent/Navbar'
 
-const Wishlist = () => {
+const DashBoard = () => {
   return (
     <div>
         <Navbar/>
     </div>
   )
 }
-export default Wishlist;
+export default  DashBoard ;
