@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Logging in...');
-    console.log('User Type:', userType);
-    console.log('Email:', email);
-    console.log('Password:', password);
+    if (!userType) {
+      setError('Please select a user type.');
+      return;
+    }
+    try {
+      const response = await axios.post(`/login${userType}`, { email, password }); // Use dynamic endpoint based on userType
+      const { token } = response.data;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('userType', userType);
+      
+      navigate(`/${userType.toLowerCase()}`);
+    } catch (err) {
+      setError('Invalid email or password');
+    }
   };
 
   const handleUserTypeChange = (type) => {
@@ -27,6 +42,7 @@ const Login = () => {
         </div>
         <div className="flex flex-col justify-center md:justify-start my-2 pt-8 md:pt-1 px-8 md:px-24 lg:px-32">
           <p className="text-center text-3xl">Login</p>
+          {error && <p className="text-red-500">{error}</p>}
           <div className="py-2 px-1">
             <button
               className={`bg-black text-white font-semibold py-2 px-10 mx-1 border border-gray-500 rounded ${userType === 'ALUMNI' ? 'selected' : ''}`}
@@ -72,7 +88,7 @@ const Login = () => {
               />
             </div>
 
-            <input type="submit" value="Log In" className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 hover:bg-primary-100 py-2 px-4 rounded-xl mt-8" />
+            <input type="submit" value="Log In" className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 py-2 px-4 rounded-xl mt-8" />
           </form>
           <div className="text-center pt-12 pb-12">
             <p>Dont have an account? <a href="/signup" className="underline font-semibold hover:bg-blue-200">Register here</a></p>
@@ -80,7 +96,7 @@ const Login = () => {
         </div>
       </div>
       <div className="w-2/3 md:w-1/2 shadow-2xl">
-        <img className="w-full h-screen  md:block float-center " src="https://images.pexels.com/photos/911758/pexels-photo-911758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background" />
+        <img className="w-full h-screen md:block float-center" src="https://images.pexels.com/photos/911758/pexels-photo-911758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background" />
       </div>
     </div>
   );
