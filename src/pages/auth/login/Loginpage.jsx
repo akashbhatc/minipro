@@ -16,7 +16,7 @@ const Login = () => {
       return;
     }
     try {
-      const response = await axios.post(`http://localhost:3001/login${userType}`, {
+      const response = await axios.post(`http://localhost:3004/auth/login${userType}`, {
         email,
         password,
       });
@@ -33,15 +33,15 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full flex bg-white">
-      <div className="w-full md:w-1/3 flex flex-col justify-center items-center">
-        <div className="text-sm text-blue-200">
+    <div className="flex flex-col md:flex-row w-full h-screen bg-white">
+      <div className="flex flex-col justify-center items-center w-full md:w-1/2 lg:w-1/3 p-4">
+        <div className="text-sm text-blue-200 mb-4">
           <a className="hover:text-blue-800" href="https://central.sjceplacements.org/">
             Click here to redirect to the college placement website
           </a>
         </div>
 
-        <div className="flex justify-center pt-32 md:pt-4">
+        <div className="flex justify-center md:pt-4">
           <a href="#">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Student_%28example%29.svg/888px-Student_%28example%29.svg.png"
@@ -50,24 +50,24 @@ const Login = () => {
             />
           </a>
         </div>
-        <div className="flex flex-col justify-center md:justify-start my-2 pt-8 md:pt-1 px-8 md:px-24 lg:px-32">
+        <div className="flex flex-col justify-center md:justify-start w-full max-w-md my-2 pt-8 md:pt-1 px-8">
           <p className="text-center text-3xl">Login</p>
           {error && <p className="text-red-500">{error}</p>}
-          <div className="py-2 px-1">
+          <div className="flex justify-center py-2">
             <button
-              className={`bg-black text-white font-semibold py-2 px-10 mx-1 border border-gray-500 rounded ${userType === 'ALUMNI' ? 'selected' : ''}`}
+              className={`bg-black text-white font-semibold py-2 px-4 mx-1 border border-gray-500 rounded ${userType === 'ALUMNI' ? 'selected' : ''}`}
               onClick={() => setUserType('ALUMNI')}
             >
               ALUMNI
             </button>
             <button
-              className={`bg-black text-white font-semibold py-2 px-10 mx-1 border border-gray-500 rounded ${userType === 'ADMIN' ? 'selected' : ''}`}
+              className={`bg-black text-white font-semibold py-2 px-4 mx-1 border border-gray-500 rounded ${userType === 'ADMIN' ? 'selected' : ''}`}
               onClick={() => setUserType('ADMIN')}
             >
               ADMIN
             </button>
             <button
-              className={`bg-black text-white font-semibold py-2 px-10 mx-1 border border-gray-500 rounded ${userType === 'STUDENT' ? 'selected' : ''}`}
+              className={`bg-black text-white font-semibold py-2 px-4 mx-1 border border-gray-500 rounded ${userType === 'STUDENT' ? 'selected' : ''}`}
               onClick={() => setUserType('STUDENT')}
             >
               STUDENT
@@ -105,9 +105,11 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="w-2/3 md:w-1/2 shadow-2xl">
-        <img className="w-full h-screen md:block float-center" src="https://images.pexels.com/photos/911758/pexels-photo-911758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background" />
-      </div>
+      <div className="w-1/2 shadow-2xl">
+            <img className="object-cover w-screen h-full hidden md:block"
+                src="https://images.unsplash.com/photo-1491555103944-7c647fd857e6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Background" />
+        </div>
     </div>
   );
 };

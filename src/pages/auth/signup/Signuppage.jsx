@@ -35,9 +35,9 @@ const Signup = () => {
     try {
       let response;
       if (userType === 'ALUMNI') {
-        response = await axios.post("http://localhost:3001/registerAlumni", signupData);
+        response = await axios.post("http://localhost:3004/auth/registerAlumni", signupData);
       } else if (userType === 'STUDENT') {
-        response = await axios.post("http://localhost:3001/registerStudent", signupData);
+        response = await axios.post("http://localhost:3004/auth/registerStudent", signupData);
       }
 
       if (response.status === 201) {
@@ -195,9 +195,11 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      <div className="w-2/3 md:w-1/2 shadow-2xl">
-        <img className="w-full h-screen md:block float-center" src="https://images.pexels.com/photos/911758/pexels-photo-911758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background" />
-      </div>
+      <div className="w-1/2 shadow-2xl">
+            <img className="object-cover w-screen h-full hidden md:block"
+                src="https://images.unsplash.com/photo-1567132765096-e5486ab30ecf?q=80&w=2856&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Background" />
+        </div>
     </div>
   );
 };
