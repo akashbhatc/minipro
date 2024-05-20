@@ -18,6 +18,7 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     const signupData = {
+      username,
       email,
       password,
       firstName: sfname,
@@ -34,14 +35,16 @@ const Signup = () => {
     try {
       let response;
       if (userType === 'ALUMNI') {
-        response = await axios.post('/registerAlumni', signupData);
+        response = await axios.post("http://localhost:3001/registerAlumni", signupData);
       } else if (userType === 'STUDENT') {
-        response = await axios.post('/registerStudent', signupData);
+        response = await axios.post("http://localhost:3001/registerStudent", signupData);
       }
-      
+
       if (response.status === 201) {
         alert('Signup successful! Please login.');
         navigate('/login');
+      } else {
+        throw new Error('Signup failed');
       }
     } catch (err) {
       setError('Signup failed. Please try again.');
@@ -103,11 +106,33 @@ const Signup = () => {
               />
             </div>
             <div className="flex flex-col pt-4">
+              <label htmlFor="sfname" className="text-lg">First Name</label>
+              <input
+                type="text"
+                id="sfname"
+                placeholder="First Name"
+                value={sfname}
+                onChange={(e) => setSfname(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="flex flex-col pt-4">
+              <label htmlFor="slname" className="text-lg">Last Name</label>
+              <input
+                type="text"
+                id="slname"
+                placeholder="Last Name"
+                value={slname}
+                onChange={(e) => setSlname(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="flex flex-col pt-4">
               <label htmlFor="email" className="text-lg">Email</label>
               <input
                 type="email"
                 id="email"
-                placeholder="your@email.com"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
@@ -138,74 +163,40 @@ const Signup = () => {
               </div>
             )}
             {userType === 'STUDENT' && (
-              <div className="flex flex-col pt-4">
-                <label htmlFor="usn" className="text-lg">USN</label>
-                <input
-                  type="text"
-                  id="usn"
-                  placeholder="USN"
-                  value={usn}
-                  onChange={(e) => setUsn(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
+              <>
+                <div className="flex flex-col pt-4">
+                  <label htmlFor="usn" className="text-lg">USN</label>
+                  <input
+                    type="text"
+                    id="usn"
+                    placeholder="USN"
+                    value={usn}
+                    onChange={(e) => setUsn(e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+                <div className="flex flex-col pt-4">
+                  <label htmlFor="passout" className="text-lg">Passout Year</label>
+                  <input
+                    type="text"
+                    id="passout"
+                    placeholder="Passout Year"
+                    value={passout}
+                    onChange={(e) => setPassout(e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+                  />
+                </div>
+              </>
             )}
-            {userType !== 'ADMIN' && (
-              <div className="flex flex-col pt-4">
-                <label htmlFor="firstname" className="text-lg">First Name</label>
-                <input
-                  type="text"
-                  id="firstname"
-                  placeholder="Enter your first name"
-                  value={sfname}
-                  onChange={(e) => setSfname(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-            )}
-            {userType !== 'ADMIN' && (
-              <div className="flex flex-col pt-4">
-                <label htmlFor="lastname" className="text-lg">Last Name</label>
-                <input
-                  type="text"
-                  id="lastname"
-                  placeholder="Enter your last name"
-                  value={slname}
-                  onChange={(e) => setSlname(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-            )}
-            {userType !== 'ADMIN' && (
-              <div className="flex flex-col pt-4">
-                <label htmlFor="passout" className="text-lg">Passout Year</label>
-                <input
-                  type="text"
-                  id="passout"
-                  placeholder="Passout Year"
-                  value={passout}
-                  onChange={(e) => setPassout(e.target.value)}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
-            )}
-            <input
-              type="submit"
-              value="Sign Up"
-              className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 hover:bg-primary-100 py-2 px-4 rounded-xl mt-8"
-            />
+            <input type="submit" value="Sign Up" className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 py-2 px-4 rounded-xl mt-8" />
           </form>
-          {userType !== 'ADMIN' && (
-            <div className="text-center pt-12 pb-12">
-              <p>
-                Already have an account? <a href="/login" className="underline font-semibold hover:bg-blue-200">Login here</a>
-              </p>
-            </div>
-          )}
+          <div className="text-center pt-12 pb-12">
+            <p>Already have an account? <a href="/login" className="underline font-semibold hover:bg-blue-200">Log in here</a></p>
+          </div>
         </div>
       </div>
       <div className="w-2/3 md:w-1/2 shadow-2xl">
-        <img className="w-full h-full md:block float-center" src="https://images.pexels.com/photos/911758/pexels-photo-911758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background" />
+        <img className="w-full h-screen md:block float-center" src="https://images.pexels.com/photos/911758/pexels-photo-911758.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Background" />
       </div>
     </div>
   );
