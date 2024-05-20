@@ -37,8 +37,6 @@ const Signup = () => {
         response = await axios.post('/registerAlumni', signupData);
       } else if (userType === 'STUDENT') {
         response = await axios.post('/registerStudent', signupData);
-      } else {
-        // handle other user types if necessary
       }
       
       if (response.status === 201) {

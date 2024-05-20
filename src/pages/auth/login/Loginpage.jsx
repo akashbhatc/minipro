@@ -16,7 +16,7 @@ const Login = () => {
       return;
     }
     try {
-      const response = await axios.post(`/login${userType}`, { email, password }); // Use dynamic endpoint based on userType
+      const response = await axios.post(`/login${userType}`, { email, password }); // "Use dynamic endpoint based on userType"
       const { token } = response.data;
 
       localStorage.setItem('token', token);
