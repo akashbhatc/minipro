@@ -46,14 +46,14 @@ const List = () => {
                                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     onClick={() => handleAddToWishlist("How to get placed")}
                                 >
-                                    <img className="h-8 w-8" src="https://www.svgrepo.com/show/447850/wishlist.svg" alt="Add to Wishlist" />
+                                    <img className="h-6 w-6 sm:w-6 sm:h-1 md:w-1 md:h-1" src="https://www.svgrepo.com/show/447850/wishlist.svg" alt="Add to Wishlist" />
                                 </button>
                                 <button 
                                     type="button" 
                                     className="font-medium text-red-600 dark:text-red-500 hover:underline"
                                     onClick={() => handleDelete("How to get placed")}
                                 >
-                                    <img className="h-8 w-8" src="https://www.svgrepo.com/show/494410/delete.svg" alt="Delete" />
+                                    <img className="h-6 w-6 sm:w-6 sm:h-1 md:w-1 md:h-1" src="https://www.svgrepo.com/show/494410/delete.svg" alt="Delete" />
                                 </button>
                             </td>
                         </tr>
