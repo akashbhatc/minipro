@@ -44,7 +44,7 @@ export const Navbar = () => {
                   )}
                 </svg>
               </button>
-              <a href="/" className="flex ms-2 md:me-24">
+              <a href="/alumni/dashboard" className="flex ms-2 md:me-24">
                 <img
                   src="https://www.svgrepo.com/show/27158/student-hat.svg"
                   className="h-8 me-3"
