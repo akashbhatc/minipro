@@ -1,43 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const UserList = ({ users }) => {
-  return (
-    <div className="bg-white rounded-md shadow-md p-1 mt-10 ml-100"> 
-      <ul className="max-w-md divide-y divide-black dark:divide-black">
-        {users.map((user) => (
-          <li key={user.id} className="pb-3 sm:pb-4">
-            <div className="flex items-center space-x-4 rtl:space-x-reverse">
-              <div className="flex-shrink-0">
-                <img className="w-8 h-8 rounded-full" src={user.image} alt={`${user.name} image`} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-black truncate dark:text-white">
-                  {user.name}
-                </p>
-                <p className="text-sm text-black truncate dark:text-gray-400">
-                  {user.email}
-                </p>
-              </div>
-              <div className="inline-flex items-center text-base font-semibold text-black dark:text-white">
-                ${user.amount}
-              </div>
+const List = () => {
+    return (
+        <div className="flex justify-center items-start min-h-screen bg-gray-100">
+            <div className="w-full max-w-4xl relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <caption className="p-5 text-lg font-semibold text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                        Recent Queries
+                    </caption>
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">Student Username</th>
+                            <th scope="col" className="px-6 py-3">Query</th>
+                            <th scope="col" className="px-6 py-3">Answer by alumni</th>
+                            <th scope="col" className="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+        </div>
+    );
 };
 
-UserList.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
-  })).isRequired,
-};
-
-export default UserList;
+export default List;
