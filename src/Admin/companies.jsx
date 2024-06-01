@@ -1,4 +1,3 @@
-// Companies.js
 import React, { useState } from 'react';
 import { Navbar } from './admincomponents/Navbar';
 import AddCompany from './admincomponents/addcompany';

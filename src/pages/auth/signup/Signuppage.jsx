@@ -4,7 +4,6 @@ import axios from "axios";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
@@ -18,7 +17,6 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     const signupData = {
-      username,
       email,
       password,
       firstName: sfname,
@@ -40,6 +38,7 @@ const Signup = () => {
           signupData
         );
       } else if (userType === "STUDENT") {
+        console.log(signupData)
         response = await axios.post(
           "http://localhost:3004/auth/registerStudent",
           signupData
@@ -82,22 +81,15 @@ const Signup = () => {
           </div>
           <h2 className="text-center text-3xl">Signup</h2>
           {error && <p className="text-red-500 mb-4">{error}</p>}
-          <div className="flex justify-between mb-4">
+          <div className="flex justify-center mb-4">
             <button
               className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${
                 userType === "ALUMNI" ? "bg-gray-800" : "bg-gray-300"
               }`}
               onClick={() => setUserType("ALUMNI")}
+              style={{ marginRight: "5px" }}
             >
               ALUMNI
-            </button>
-            <button
-              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${
-                userType === "ADMIN" ? "bg-gray-800" : "bg-gray-300"
-              }`}
-              onClick={() => setUserType("ADMIN")}
-            >
-              ADMIN
             </button>
             <button
               className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${
@@ -108,20 +100,8 @@ const Signup = () => {
               STUDENT
             </button>
           </div>
+
           <form onSubmit={handleSignup} className="space-y-4">
-            <div className="flex flex-col">
-              <label htmlFor="username" className="text-lg">
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
             <div className="flex flex-col">
               <label htmlFor="sfname" className="text-lg">
                 First Name
@@ -174,7 +154,20 @@ const Signup = () => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
-            {/* Additional fields based on userType */}
+            <div className="flex flex-col">
+              <label htmlFor="passout" className="text-lg">
+                Passout Year
+              </label>
+              <input
+                type="text"
+                id="passout"
+                placeholder="Passout Year"
+                value={passout}
+                onChange={(e) => setPassout(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+
             {userType === "ALUMNI" && (
               <div className="flex flex-col">
                 <label htmlFor="companyName" className="text-lg">
@@ -205,26 +198,14 @@ const Signup = () => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <label htmlFor="passout" className="text-lg">
-                    Passout Year
-                  </label>
-                  <input
-                    type="text"
-                    id="passout"
-                    placeholder="Passout Year"
-                    value={passout}
-                    onChange={(e) => setPassout(e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                </div>
               </>
             )}
-            <center><input
-              type="submit"
-              value="Sign Up"
-              className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 py-2 px-2 rounded-xl mt-8"
-            />
+            <center>
+              <input
+                type="submit"
+                value="Sign Up"
+                className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 py-2 px-2 rounded-xl mt-8"
+              />
             </center>
           </form>
 
