@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../../../state/index';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +10,7 @@ const Login = () => {
   const [userType, setUserType] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,17 +24,34 @@ const Login = () => {
         password,
       });
 
-      const { token } = response.data; // Extract token from response
+      const { token, user } = response.data; // Extract token and user data from response
 
       localStorage.setItem('token', token);
       localStorage.setItem('userType', userType);
 
-      navigate(`/${userType.toLowerCase()}`);
+      // Dispatch the setLogin action with user data and token
+      dispatch(setLogin({ user, token, type: `${userType.toLowerCase()}/login` }));
+
+      // Redirect based on user type
+      if (userType === 'ADMIN') {
+        navigate('/admin/alumni');
+      } else {
+        navigate(`/${userType.toLowerCase()}/dashboard`);
+      }
     } catch (err) {
-      setError('Invalid email or password');
+      if (err.response) {
+        // Server responded with a status other than 200 range
+        setError(err.response.data.msg || 'Invalid email or password');
+      } else if (err.request) {
+        // Request was made but no response received
+        setError('Server did not respond. Please try again later.');
+      } else {
+        // Something else happened while setting up the request
+        setError('An error occurred. Please try again.');
+      }
     }
   };
-
+  
   return (
     <div className="flex flex-col md:flex-row w-full h-screen bg-white">
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 lg:w-1/3 p-4">
@@ -55,22 +75,24 @@ const Login = () => {
           {error && <p className="text-red-500">{error}</p>}
           <div className="flex justify-center py-2">
             <button
-              className={`bg-black text-white font-semibold py-2 px-4 mx-1 border border-gray-500 rounded ${userType === 'ALUMNI' ? 'selected' : ''}`}
+              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'ALUMNI' ? 'bg-gray-800' : 'bg-gray-300'}`}
               onClick={() => setUserType('ALUMNI')}
+              style={{ marginRight: '5px' }}
             >
               ALUMNI
             </button>
             <button
-              className={`bg-black text-white font-semibold py-2 px-4 mx-1 border border-gray-500 rounded ${userType === 'ADMIN' ? 'selected' : ''}`}
+              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'STUDENT' ? 'bg-gray-800' : 'bg-gray-300'}`}
+              onClick={() => setUserType('STUDENT')}
+              style={{ marginRight: '5px' }}
+            >
+              STUDENT
+            </button>
+            <button
+              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'ADMIN' ? 'bg-gray-800' : 'bg-gray-300'}`}
               onClick={() => setUserType('ADMIN')}
             >
               ADMIN
-            </button>
-            <button
-              className={`bg-black text-white font-semibold py-2 px-4 mx-1 border border-gray-500 rounded ${userType === 'STUDENT' ? 'selected' : ''}`}
-              onClick={() => setUserType('STUDENT')}
-            >
-              STUDENT
             </button>
           </div>
           <form className="flex flex-col pt-3 md:pt-8" onSubmit={handleLogin}>
@@ -101,15 +123,15 @@ const Login = () => {
             <input type="submit" value="Log In" className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 py-2 px-4 rounded-xl mt-8" />
           </form>
           <div className="text-center pt-12 pb-12">
-            <p>Dont have an account? <a href="/signup" className="underline font-semibold hover:bg-blue-200">Register here</a></p>
+            <p>Don't have an account? <a href="/signup" className="underline font-semibold hover:bg-blue-200">Register here</a></p>
           </div>
         </div>
       </div>
       <div className="w-1/2 shadow-2xl">
-            <img className="object-cover w-screen h-full hidden md:block"
-                src="https://images.unsplash.com/photo-1491555103944-7c647fd857e6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Background" />
-        </div>
+        <img className="object-cover w-screen h-full hidden md:block"
+          src="https://images.unsplash.com/photo-1491555103944-7c647fd857e6?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Background" />
+      </div>
     </div>
   );
 };

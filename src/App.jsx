@@ -1,36 +1,66 @@
 import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./state/store";
 import Login from "./pages/auth/login/Loginpage";
 import Signuppage from "./pages/auth/signup/Signuppage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashBoard from "./student/DashBoard";
 import Queries from "./student/Queries";
 import Wishlist from "./student/Wishlist";
 import ADashBoard from "./Alumni/ADashBoard";
 import AQueries from "./Alumni/Queries";
 import Alumni from "./Admin/Alumni";
-import Companies from "./Admin/companies";  
+import Companies from "./Admin/companies";
 import Adqueries from "./Admin/queries";
 import Students from "./Admin/Students";
 
 const App = () => {
   return (
-    <div>
+    <Provider store={store}>
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signuppage />} />
-          <Route exact path="/student/queries" element={<Queries />} />
-          <Route exact path="/student/dashboard" element={<DashBoard />} />
-          <Route exact path="/student/wishlist" element={<Wishlist />} />
-          <Route exact path="/alumni/dashboard" element={<ADashBoard />} />
-          <Route exact path="/alumni/queries" element={<AQueries />} />
-          <Route exact path="/admin/alumni" element={<Alumni />} />
-          <Route exact path="/admin/companies" element={<Companies />} />
-          <Route exact path="/admin/queries" element={<Adqueries />} />
-          <Route exact path="/admin/student" element={<Students />} />
+          <Route
+            path="/student/dashboard"
+            element={<DashBoard />}
+          />
+          <Route
+            path="/student/queries"
+            element={<Queries />}
+          />
+          <Route
+            path="/student/wishlist"
+            element={<Wishlist />}
+          />
+          <Route
+            path="/alumni/dashboard"
+            element={<ADashBoard />}
+          />
+          <Route
+            path="/alumni/queries"
+            element={<AQueries />}
+          />
+          <Route
+            path="/admin/alumni"
+            element={<Alumni />}
+          />
+          <Route
+            path="/admin/companies"
+            element={<Companies />}
+          />
+          <Route
+            path="/admin/queries"
+            element={<Adqueries />}
+          />
+          <Route
+            path="/admin/student"
+            element={<Students />}
+          />
+          <Route path="/" element={<Navigate to="/login" />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </Provider>
   );
 };
 

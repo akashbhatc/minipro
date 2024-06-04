@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Card from "./card";  // Adjust the import path based on your file structure
 
 export const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -33,7 +34,7 @@ export const Navbar = () => {
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M4 5a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4z"
+                      d="M4 5a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4z"
                     ></path>
                   ) : (
                     <path
@@ -101,7 +102,6 @@ export const Navbar = () => {
         </div>
       </nav>
 
-
       <aside
         id="default-sidebar"
         className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${
@@ -153,6 +153,12 @@ export const Navbar = () => {
           </ul>
         </div>
       </aside>
+
+      <div className="pt-20 pl-64">  {/* Adjust the padding and margin here */}
+        <div className="p-4">
+          <Card />
+        </div>
+      </div>
     </div>
   );
 };

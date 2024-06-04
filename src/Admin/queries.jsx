@@ -1,14 +1,13 @@
 import React from "react";
 import { Navbar } from "./admincomponents/Navbar";
 import List from "./admincomponents/list";
-
-const Adqueries = () => {
+const Queries = () => {
   return (
     <>
     <div>
       <Navbar />
     </div>
-    <div className="p-4 sm:ml-64">
+    <div className="p-10 my-24 sm:ml-64">
       <div className="grid flex grid-cols-1 gap-4">
         <List/>
       </div>
@@ -17,4 +16,4 @@ const Adqueries = () => {
   );
 };
 
-export default Adqueries;
+export default Queries;
