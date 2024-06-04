@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar } from './admincomponents/Navbar';
 import AddCompany from './admincomponents/addcompany';
-import CompanyTable from './admincomponents/companytable';
+//import CompanyTable from './admincomponents/companytable';
 
 
 const Companies = () => {
@@ -11,9 +11,9 @@ const Companies = () => {
       setCompanies((prevCompanies) => [...prevCompanies, company]);
     };
   
-    const handleDeleteCompany = (index) => {
-      setCompanies((prevCompanies) => prevCompanies.filter((_, i) => i !== index));
-    };
+    // const handleDeleteCompany = (index) => {
+    //   setCompanies((prevCompanies) => prevCompanies.filter((_, i) => i !== index));
+    // };
   
     return (
       <>
@@ -23,7 +23,6 @@ const Companies = () => {
         <div className="p-4 sm:ml-64">
           <div className="grid grid-cols-1 gap-4">
             <AddCompany onAddCompany={handleAddCompany} />
-            <CompanyTable companies={companies} onDeleteCompany={handleDeleteCompany} />
           </div>
         </div>
       </>

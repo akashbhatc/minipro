@@ -13,7 +13,7 @@ const AddCompany = ({ onAddCompany }) => {
 
     try {
       // Construct the URL with the user's ID
-      const url = `${userId}/company/add`;
+      const url = `http://localhost:3004/admin/addCompany`;
 
       // Make a POST request to add company with admin ID
       const response = await axios.post(url, { companyName, location });
