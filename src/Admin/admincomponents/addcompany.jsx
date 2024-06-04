@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const AddCompany = ({ onAddCompany }) => {
   const [companyName, setCompanyName] = useState('');
+  const [location, setLocation] = useState('');
+  const userId = useSelector(state => state.auth.user?._id); // Access userId from Redux store
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!companyName.trim()) return;
-    onAddCompany({ name: companyName });
-    setCompanyName('');
+    if (!companyName.trim() || !location.trim()) return;
+
+    try {
+      // Construct the URL with the user's ID
+      const url = `${userId}/company/add`;
+
+      // Make a POST request to add company with admin ID
+      const response = await axios.post(url, { companyName, location });
+
+      const { company } = response.data;
+      onAddCompany(company);
+      setCompanyName('');
+      setLocation('');
+    } catch (error) {
+      console.error('Error adding company:', error);
+      // Handle error
+    }
   };
 
   return (
@@ -18,6 +36,14 @@ const AddCompany = ({ onAddCompany }) => {
         onChange={(e) => setCompanyName(e.target.value)}
         className="w-full px-3 py-2 text-gray-800 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
         placeholder="Enter Company Name"
+        required
+      />
+      <input
+        type="text"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        className="w-full px-3 py-2 mt-2 text-gray-800 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+        placeholder="Enter Location"
         required
       />
       <button

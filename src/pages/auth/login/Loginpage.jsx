@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { setLogin } from '../../../state/index';
+import { loginUser  } from '../../../state/index';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -24,15 +24,13 @@ const Login = () => {
         password,
       });
 
-      const { token, user } = response.data; // Extract token and user data from response
+      const { token, user } = response.data;
 
       localStorage.setItem('token', token);
       localStorage.setItem('userType', userType);
 
-      // Dispatch the setLogin action with user data and token
-      dispatch(setLogin({ user, token, type: `${userType.toLowerCase()}/login` }));
+      dispatch(loginUser({ user, token, type: `${userType.toLowerCase()}/login` }));
 
-      // Redirect based on user type
       if (userType === 'ADMIN') {
         navigate('/admin/alumni');
       } else {
@@ -40,18 +38,15 @@ const Login = () => {
       }
     } catch (err) {
       if (err.response) {
-        // Server responded with a status other than 200 range
         setError(err.response.data.msg || 'Invalid email or password');
       } else if (err.request) {
-        // Request was made but no response received
         setError('Server did not respond. Please try again later.');
       } else {
-        // Something else happened while setting up the request
         setError('An error occurred. Please try again.');
       }
     }
   };
-  
+
   return (
     <div className="flex flex-col md:flex-row w-full h-screen bg-white">
       <div className="flex flex-col justify-center items-center w-full md:w-1/2 lg:w-1/3 p-4">
@@ -71,7 +66,7 @@ const Login = () => {
           </a>
         </div>
         <div className="flex flex-col justify-center md:justify-start w-full max-w-md my-2 pt-8 md:pt-1 px-8">
-          <p className="text-center text-3xl">Login</p>
+          <p className="text-center text-gray-800 text-3xl pb-4">Login</p>
           {error && <p className="text-red-500">{error}</p>}
           <div className="flex justify-center py-2">
             <button

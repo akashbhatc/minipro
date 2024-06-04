@@ -9,25 +9,26 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setLogin: (state, action) => {
-      const { user, token, type } = action.payload;
+    loginUser: (state, action) => {
+      const { user, token } = action.payload;
       state.user = user;
       state.token = token;
-      if (type === 'student/login') {
-        state.user.studentId = user._id;
-      } else if (type === 'alumni/login') {
-        state.user.alumniId = user._id;
-      } else if (type === 'admin/login') {
-        state.user.adminId = user._id;
-      }
-      console.log("User logged in:", state.user);
     },
-    setLogout: (state) => {
+    logoutUser: (state) => {
       state.user = null;
       state.token = null;
+    },
+    setStudentId: (state, action) => {
+      state.user.studentId = action.payload.studentId;
+    },
+    setAlumniId: (state, action) => {
+      state.user.alumniId = action.payload.alumniId;
+    },
+    setAdminId: (state, action) => {
+      state.user.adminId = action.payload.adminId;
     },
   },
 });
 
-export const { setLogin, setLogout } = authSlice.actions;
+export const { loginUser, logoutUser, setStudentId, setAlumniId, setAdminId } = authSlice.actions;
 export default authSlice.reducer;

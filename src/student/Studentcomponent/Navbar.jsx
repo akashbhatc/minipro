@@ -1,14 +1,22 @@
-
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../state/index";
+import Card from "./card";  // Adjust the import path based on your file structure
 
 export const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/login");
+  };
   return (
     <div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -152,16 +160,17 @@ export const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
-                to="/login"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              <button
+                onClick={handleLogout}
+                className="flex items-center w-full p-2 text-gray-900 rounded-lg bg-white hover:border-gray-100 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 group"
               >
                 <img
                   src="https://www.svgrepo.com/show/527785/logout-2.svg"
                   className="h-6 me-3"
+                  alt="Logout"
                 />
-                <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
-              </Link>
+                <span className="ms-3 whitespace-nowrap">Logout</span>
+              </button>
             </li>
           </ul>
         </div>

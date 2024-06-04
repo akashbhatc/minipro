@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../state/index";
 import Card from "./card";  // Adjust the import path based on your file structure
 
 export const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/login");
   };
 
   return (
@@ -34,13 +43,13 @@ export const Navbar = () => {
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M4 5a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4z"
+                      d="M4 5a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4z"
                     ></path>
                   ) : (
                     <path
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      d="M4 5a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4z"
+                      d="M4 5a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zm0 4a1 1 0 0 1 0-2h12a1 1 0 0 1 0 2H4z"
                     ></path>
                   )}
                 </svg>
@@ -114,51 +123,48 @@ export const Navbar = () => {
             <li>
               <Link
                 to="/alumni/dashboard"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 hover:border-gray-100 dark:hover:bg-gray-700 group"
               >
-               <img
-                src="https://www.svgrepo.com/show/520684/dashboard.svg"
-                className="h-6 me-3"
-              />
+                <img
+                  src="https://www.svgrepo.com/show/520684/dashboard.svg"
+                  className="h-6 me-3"
+                  alt="Dashboard"
+                />
                 <span className="ms-3">Dashboard</span>
               </Link>
             </li>
             <li>
               <Link
                 to="/alumni/queries"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 hover:border-gray-100 dark:hover:bg-gray-700 group"
               >
                 <img
-                src="https://www.svgrepo.com/show/270972/mailbox.svg"
-                className="h-6 me-3"
-              />
-              <span className="flex-1 ms-3 whitespace-nowrap">Queries</span>
-              <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                3
-              </span>
+                  src="https://www.svgrepo.com/show/270972/mailbox.svg"
+                  className="h-6 me-3"
+                  alt="Queries"
+                />
+                <span className="flex-1 ms-3 whitespace-nowrap">Queries</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                  3
+                </span>
               </Link>
             </li>
             <li>
-              <Link
-                to="/login"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              <button
+                onClick={handleLogout}
+                className="flex items-center w-full p-2 text-gray-900 rounded-lg bg-white hover:border-gray-100 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 group"
               >
                 <img
                   src="https://www.svgrepo.com/show/527785/logout-2.svg"
                   className="h-6 me-3"
+                  alt="Logout"
                 />
-                <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
-              </Link>
+                <span className="ms-3 whitespace-nowrap">Logout</span>
+              </button>
             </li>
           </ul>
         </div>
       </aside>
-
-      <div className="pt-20 pl-64">  {/* Adjust the padding and margin here */}
-        <div className="p-4">
-          <Card />
-        </div>
-      </div>
     </div>
   );
 };
