@@ -1,32 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Navbar } from './admincomponents/Navbar';
 import AddCompany from './admincomponents/addcompany';
-//import CompanyTable from './admincomponents/companytable';
-
+import CompanyList from './admincomponents/companylist';
 
 const Companies = () => {
     const [companies, setCompanies] = useState([]);
-  
+
+    useEffect(() => {
+        async function fetchCompanies() {
+            try {
+                const response = await axios.get('http://localhost:3004/admin/company');
+                setCompanies(response.data);
+            } catch (error) {
+                console.error('Error fetching companies:', error);
+            }
+        }
+
+        fetchCompanies();
+    }, []);
+
     const handleAddCompany = (company) => {
-      setCompanies((prevCompanies) => [...prevCompanies, company]);
+        setCompanies((prevCompanies) => [...prevCompanies, company]);
     };
-  
-    // const handleDeleteCompany = (index) => {
-    //   setCompanies((prevCompanies) => prevCompanies.filter((_, i) => i !== index));
-    // };
-  
+
     return (
-      <>
-        <div>
-          <Navbar />
-        </div>
-        <div className="p-4 sm:ml-64">
-          <div className="grid grid-cols-1 gap-4">
-            <AddCompany onAddCompany={handleAddCompany} />
-          </div>
-        </div>
-      </>
+        <>
+            <div>
+                <Navbar />
+            </div>
+            <div className="p-4 sm:ml-64">
+                <div className="grid grid-cols-1 gap-4">
+                  <div className='p-4'>
+                    <AddCompany onAddCompany={handleAddCompany} />
+                    </div>
+                    <CompanyList companies={companies} />
+                </div>
+            </div>
+        </>
     );
-  };
-  
-  export default Companies;
+};
+
+export default Companies;

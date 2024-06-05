@@ -5,17 +5,14 @@ import axios from 'axios';
 const AddCompany = ({ onAddCompany }) => {
   const [companyName, setCompanyName] = useState('');
   const [location, setLocation] = useState('');
-  const userId = useSelector(state => state.auth.user?._id); // Access userId from Redux store
+  const userId = useSelector(state => state.auth.user?._id); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!companyName.trim() || !location.trim()) return;
 
     try {
-      // Construct the URL with the user's ID
       const url = `http://localhost:3004/admin/addCompany`;
-
-      // Make a POST request to add company with admin ID
       const response = await axios.post(url, { companyName, location });
 
       const { company } = response.data;
@@ -24,7 +21,6 @@ const AddCompany = ({ onAddCompany }) => {
       setLocation('');
     } catch (error) {
       console.error('Error adding company:', error);
-      // Handle error
     }
   };
 
