@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { loginUser  } from '../../../state/index';
+import { loginUser } from '../../../state/index';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -24,17 +24,19 @@ const Login = () => {
         password,
       });
 
-      const { token, user } = response.data;
+      const { token, ...user } = response.data;
 
       localStorage.setItem('token', token);
       localStorage.setItem('userType', userType);
 
       dispatch(loginUser({ user, token, type: `${userType.toLowerCase()}/login` }));
 
-      if (userType === 'ADMIN') {
+      if (userType === 'Admin') {
         navigate('/admin/alumni');
+      } else if (userType === 'Alumni') {
+        navigate('/alumni/dashboard');
       } else {
-        navigate(`/${userType.toLowerCase()}/dashboard`);
+        navigate('/student/dashboard');
       }
     } catch (err) {
       if (err.response) {
@@ -70,24 +72,24 @@ const Login = () => {
           {error && <p className="text-red-500">{error}</p>}
           <div className="flex justify-center py-2">
             <button
-              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'ALUMNI' ? 'bg-gray-800' : 'bg-gray-300'}`}
-              onClick={() => setUserType('ALUMNI')}
+              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'Alumni' ? 'bg-gray-800' : 'bg-gray-300'}`}
+              onClick={() => setUserType('Alumni')}
               style={{ marginRight: '5px' }}
             >
-              ALUMNI
+              Alumni
             </button>
             <button
-              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'STUDENT' ? 'bg-gray-800' : 'bg-gray-300'}`}
-              onClick={() => setUserType('STUDENT')}
+              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'Student' ? 'bg-gray-800' : 'bg-gray-300'}`}
+              onClick={() => setUserType('Student')}
               style={{ marginRight: '5px' }}
             >
-              STUDENT
+              Student
             </button>
             <button
-              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'ADMIN' ? 'bg-gray-800' : 'bg-gray-300'}`}
-              onClick={() => setUserType('ADMIN')}
+              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'Admin' ? 'bg-gray-800' : 'bg-gray-300'}`}
+              onClick={() => setUserType('Admin')}
             >
-              ADMIN
+              Admin
             </button>
           </div>
           <form className="flex flex-col pt-3 md:pt-8" onSubmit={handleLogin}>

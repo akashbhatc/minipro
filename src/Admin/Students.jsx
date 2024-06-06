@@ -27,7 +27,7 @@ const Students = () => {
       </div>
       <div className="p-4 sm:ml-64">
         <div className="grid grid-cols-1 gap-4">
-          <h1 className="text-2xl font-bold">Students</h1>
+          <h1 className="text-2xl font-bold text-g">Students</h1>
           <List students={students} />
         </div>
       </div>

@@ -80,7 +80,7 @@ const Signup = () => {
               />
             </a>
           </div>
-          <h2 className="text-center text-3xl">Signup</h2>
+          <h2 className="text-center text-3xl text-gray-700 pb-3">Signup</h2>
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <div className="flex justify-center mb-4">
             <button

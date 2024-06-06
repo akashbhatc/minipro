@@ -12,6 +12,7 @@ export const authSlice = createSlice({
   reducers: {
     loginUser: (state, action) => {
       const { user, token } = action.payload;
+      console.log('Reducer loginUser called with:', action.payload);
       state.user = user;
       state.token = token;
     },
