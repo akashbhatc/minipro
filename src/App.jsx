@@ -7,7 +7,6 @@ import Signuppage from "./pages/auth/signup/Signuppage";
 import DashBoard from "./student/DashBoard";
 import Queries from "./student/Queries";
 import Wishlist from "./student/Wishlist";
-import ADashBoard from "./Alumni/ADashBoard";
 import AQueries from "./Alumni/Queries";
 import Alumni from "./Admin/Alumni";
 import Companies from "./Admin/companies";
@@ -34,11 +33,7 @@ const App = () => {
             element={<Wishlist />}
           />
           <Route
-            path="/alumni/dashboard"
-            element={<ADashBoard />}
-          />
-          <Route
-            path="/alumni/queries"
+            path="/alumni/:alumniId/queries"
             element={<AQueries />}
           />
           <Route

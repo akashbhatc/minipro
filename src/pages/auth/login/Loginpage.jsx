@@ -9,8 +9,15 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const userTypeDataMap = {
+    Student: 'student',
+    Alumni: 'alumni',
+    Admin: 'admin',
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,44 +25,30 @@ const Login = () => {
       setError('Please select a user type.');
       return;
     }
+    setLoading(true);
+    setError('');
+
     try {
       const response = await axios.post(`http://localhost:3004/auth/login${userType}`, {
         email,
         password,
       });
 
-      console.log('Login response:', response.data); // Logging the response data
-
-      const { token, student, alumni, admin } = response.data;
-      let userId;
-      let user;
-
-      if (userType === 'Student') {
-        userId = student._id;
-        user = student;
-      } else if (userType === 'Alumni') {
-        userId = alumni._id;
-        user = alumni;
-      } else if (userType === 'Admin') {
-        userId = admin._id;
-        user = admin;
-      }
-
-      console.log('User ID:', userId); // Logging user ID
+      const { token, ...userData } = response.data;
+      const userKey = userTypeDataMap[userType];
+      const user = userData[userKey];
 
       localStorage.setItem('token', token);
       localStorage.setItem('userType', userType);
 
-      // Dispatch loginUser action with user details
       dispatch(loginUser({ user, token, type: `${userType.toLowerCase()}/login` }));
 
       if (userType === 'Admin') {
         navigate('/admin/alumni');
       } else if (userType === 'Alumni') {
-        navigate('/alumni/dashboard');
+        navigate(`/alumni/${user._id}/queries`);
       } else {
-        // Redirect to student dashboard with student ID
-        navigate(`/student/${userId}/dashboard`);
+        navigate(`/student/${user._id}/dashboard`);
       }
     } catch (err) {
       if (err.response) {
@@ -65,6 +58,8 @@ const Login = () => {
       } else {
         setError('An error occurred. Please try again.');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,34 +85,26 @@ const Login = () => {
           <p className="text-center text-gray-800 text-3xl pb-4">Login</p>
           {error && <p className="text-red-500">{error}</p>}
           <div className="flex justify-center py-2">
-            <button
-              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'Alumni' ? 'bg-gray-800' : 'bg-gray-300'}`}
-              onClick={() => setUserType('Alumni')}
-              style={{ marginRight: '5px' }}
-            >
-              Alumni
-            </button>
-            <button
-              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'Student' ? 'bg-gray-800' : 'bg-gray-300'}`}
-              onClick={() => setUserType('Student')}
-              style={{ marginRight: '5px' }}
-            >
-              Student
-            </button>
-            <button
-              className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${userType === 'Admin' ? 'bg-gray-800' : 'bg-gray-300'}`}
-              onClick={() => setUserType('Admin')}
-            >
-              Admin
-            </button>
+            {['Alumni', 'Student', 'Admin'].map((type) => (
+              <button
+                key={type}
+                className={`py-2 px-6 text-white font-semibold border border-gray-500 rounded ${
+                  userType === type ? 'bg-gray-800' : 'bg-gray-300'
+                }`}
+                onClick={() => setUserType(type)}
+                style={{ marginRight: type !== 'Admin' ? '5px' : 0 }}
+              >
+                {type}
+              </button>
+            ))}
           </div>
           <form className="flex flex-col pt-3 md:pt-8" onSubmit={handleLogin}>
             <div className="flex flex-col pt-4">
-              <label htmlFor="email" className="text-lg">Email</label>
+              <label htmlFor="email" className="text-lg text-gray-400">Email</label>
               <input
                 type="text"
                 id="email"
-                placeholder="Email"
+                placeholder="Enter your Email here!"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
@@ -125,18 +112,23 @@ const Login = () => {
             </div>
 
             <div className="flex flex-col pt-4">
-              <label htmlFor="password" className="text-lg">Password</label>
+              <label htmlFor="password" className="text-lg text-gray-400">Password</label>
               <input
                 type="password"
                 id="password"
-                placeholder="Password"
+                placeholder="Enter your Password here!"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
 
-            <input type="submit" value="Log In" className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 py-2 px-4 rounded-xl mt-8" />
+            <input
+              type="submit"
+              value={loading ? 'Logging in...' : 'Log In'}
+              disabled={loading}
+              className="bg-blue-900 text-white font-bold text-lg hover:bg-blue-200 hover:text-gray-900 py-2 px-4 rounded-xl mt-8"
+            />
           </form>
           <div className="text-center pt-12 pb-12">
             <p>Don't have an account? <a href="/signup" className="underline font-semibold hover:bg-blue-200">Register here</a></p>

@@ -1,7 +1,7 @@
-// QueryList.jsx
 import React from 'react';
+import axios from 'axios';
 
-const QueryList = ({ queries }) => {
+const QueryList = ({ queries, deleteQuery }) => {
     return (
         <div className="flex justify-center items-start min-h-screen bg-gray-100">
             <div className="w-full max-w-4xl relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -10,6 +10,7 @@ const QueryList = ({ queries }) => {
                         <tr>
                             <th scope="col" className="px-6 py-3">Student ID</th>
                             <th scope="col" className="px-6 py-3">Query Text</th>
+                            <th scope="col" className="px-6 py-3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -17,6 +18,14 @@ const QueryList = ({ queries }) => {
                             <tr key={query._id}>
                                 <td className="px-6 py-4">{query.studentId}</td>
                                 <td className="px-6 py-4">{query.queryText}</td>
+                                <td className="px-6 py-4">
+                                    <button
+                                        onClick={() => deleteQuery(query._id)}
+                                        className="text-red-600 hover:text-red-900"
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

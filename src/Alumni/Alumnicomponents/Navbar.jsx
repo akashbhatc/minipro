@@ -121,19 +121,6 @@ export const Navbar = () => {
           <ul className="space-y-2 font-medium">
             <li>
               <Link
-                to="/alumni/dashboard"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 hover:border-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <img
-                  src="https://www.svgrepo.com/show/520684/dashboard.svg"
-                  className="h-6 me-3"
-                  alt="Dashboard"
-                />
-                <span className="ms-3">Dashboard</span>
-              </Link>
-            </li>
-            <li>
-              <Link
                 to="/alumni/queries"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 hover:border-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -143,9 +130,6 @@ export const Navbar = () => {
                   alt="Queries"
                 />
                 <span className="flex-1 ms-3 whitespace-nowrap">Queries</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  3
-                </span>
               </Link>
             </li>
             <li>

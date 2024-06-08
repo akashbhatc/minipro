@@ -9,7 +9,6 @@ const List = ({ handleDelete }) => {
     const companyIdFromUrl = location.pathname.split('/')[4]; // Extract company ID from URL
 
     useEffect(() => {
-        // Fetch queries for the given company ID
         const fetchQueries = async () => {
             try {
                 const response = await axios.get(`http://localhost:3004/company/${companyIdFromUrl}/queries`);
