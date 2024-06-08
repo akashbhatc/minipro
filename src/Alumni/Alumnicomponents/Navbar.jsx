@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../state/index";
 
@@ -7,6 +7,8 @@ export const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const userid = location.pathname.split('/')[2]; // Extract user ID from URL
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -53,7 +55,7 @@ export const Navbar = () => {
                   )}
                 </svg>
               </button>
-              <a href="/alumni/dashboard" className="flex ms-2 md:me-24">
+              <a href={`/alumni/${userid}/dashboard`} className="flex ms-2 md:me-24">
                 <img
                   src="https://www.svgrepo.com/show/27158/student-hat.svg"
                   className="h-8 me-3"
@@ -121,7 +123,7 @@ export const Navbar = () => {
           <ul className="space-y-2 font-medium">
             <li>
               <Link
-                to="/alumni/queries"
+                to={`/alumni/${userid}/queries`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 hover:border-gray-100 dark:hover:bg-gray-700 group"
               >
                 <img

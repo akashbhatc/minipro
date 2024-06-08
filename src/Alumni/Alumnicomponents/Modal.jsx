@@ -1,13 +1,24 @@
 import React from 'react';
+import axios from 'axios';
 
-const Modal = ({ username, closeModal }) => {
+const Modal = ({ username, queryId, closeModal, onSubmit }) => {
     const [answer, setAnswer] = React.useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Submitted answer:', answer);
-        setAnswer('');
-        closeModal();
+        try {
+            // Make a POST request to submit the answer
+            const response = await axios.post(`http://localhost:3004/alumni/${username}/answer`, {
+                queryId: queryId, // Pass queryId to the backend
+                answerText: answer
+            });
+            console.log('Submitted answer:', response.data.newAnswer);
+            onSubmit(answer);
+            setAnswer('');
+            closeModal();
+        } catch (error) {
+            console.error('Error submitting answer:', error);
+        }
     };
 
     return (
@@ -20,8 +31,8 @@ const Modal = ({ username, closeModal }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                    Respond to {username}&apos;s Query
+                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                        Respond to Students Query
                     </h3>
                     <button 
                         type="button" 
