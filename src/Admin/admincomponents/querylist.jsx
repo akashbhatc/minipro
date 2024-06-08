@@ -21,7 +21,7 @@ const QueryList = ({ queries, deleteQuery }) => {
                                 <td className="px-6 py-4">
                                     <button
                                         onClick={() => deleteQuery(query._id)}
-                                        className="text-red-600 hover:text-red-900"
+                                        className="text-red-600 bg-gray-600 hover:bg-gray-100 hover:text-red-900"
                                     >
                                         Delete
                                     </button>

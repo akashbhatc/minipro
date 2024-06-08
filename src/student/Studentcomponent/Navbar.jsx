@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../state/index";
 
-export const Navbar = () => {
+export const Navbar = ({ loggedInUserId }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Extracting userIdfromUrl from the URL
+  const userIdfromUrl = location.pathname.split('/')[2];
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -16,6 +20,7 @@ export const Navbar = () => {
     dispatch(logoutUser());
     navigate("/login");
   };
+
   return (
     <div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -52,7 +57,7 @@ export const Navbar = () => {
                   )}
                 </svg>
               </button>
-              <a href="/student/dashboard" className="flex ms-2 md:me-24">
+              <a href="/student/${userIdfromUrl}/dashboard" className="flex ms-2 md:me-24">
                 <img
                   src="https://www.svgrepo.com/show/27158/student-hat.svg"
                   className="h-8 me-3"
@@ -118,57 +123,46 @@ export const Navbar = () => {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-          <ul className="space-y-2 font-medium">
-            <li>
-              <Link
-                to="/student/${userIdfromUrl}/dashboard"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-               <img
-                src="https://www.svgrepo.com/show/520684/dashboard.svg"
-                className="h-6 me-3"
-              />
-                <span className="ms-3">Dashboard</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/student/${userIdfromUrl}/queries"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <img
-                src="https://www.svgrepo.com/show/270972/mailbox.svg"
-                className="h-6 me-3"
-              />
-              <span className="flex-1 ms-3 whitespace-nowrap">Queries</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/student/wishlist"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-               <img
-                src="https://www.svgrepo.com/show/425551/wishlist-list-favorite.svg"
-                className="h-6 me-3"
-              />
-                <span className="ms-3">wishlist</span>
-              </Link>
-            </li>
-            <li>
-              <button
-                onClick={handleLogout}
-                className="flex items-center w-full p-2 text-gray-900 rounded-lg bg-white hover:border-gray-100 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 group"
-              >
-                <img
-                  src="https://www.svgrepo.com/show/527785/logout-2.svg"
-                  className="h-6 me-3"
-                  alt="Logout"
-                />
-                <span className="ms-3 whitespace-nowrap">Logout</span>
-              </button>
-            </li>
-          </ul>
+        <ul className="space-y-2 font-medium">
+  <li>
+    <Link
+      to={`/student/${userIdfromUrl}/dashboard`}
+      className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+    >
+      <img
+        src="https://www.svgrepo.com/show/520684/dashboard.svg"
+        className="h-6 me-3"
+      />
+      <span className="ms-3">Dashboard</span>
+    </Link>
+  </li>
+  <li>
+    <Link
+      to={`/student/${userIdfromUrl}/myqueries`}
+      className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+    >
+      <img
+        src="https://www.svgrepo.com/show/425551/wishlist-list-favorite.svg"
+        className="h-6 me-3"
+      />
+      <span className="ms-3">My Queries</span>
+    </Link>
+  </li>
+  <li>
+    <button
+      onClick={handleLogout}
+      className="flex items-center w-full p-2 text-gray-900 rounded-lg bg-white hover:border-gray-100 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 group"
+    >
+      <img
+        src="https://www.svgrepo.com/show/527785/logout-2.svg"
+        className="h-6 me-3"
+        alt="Logout"
+      />
+      <span className="ms-3 whitespace-nowrap">Logout</span>
+    </button>
+  </li>
+</ul>
+
         </div>
       </aside>
     </div>

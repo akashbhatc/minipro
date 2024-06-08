@@ -29,9 +29,6 @@ const List = () => {
                             Query
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Answers by other users
-                        </th>
-                        <th scope="col" className="px-6 py-3">
                             <span className="sr-only">Respond</span>
                         </th>
                     </tr>
@@ -43,9 +40,6 @@ const List = () => {
                         </th>
                         <td className="px-6 py-4">
                             How to get placed 
-                        </td>
-                        <td className="px-6 py-4">
-                            Chill
                         </td>
                         <td className="px-6 py-4 text-right">
                             <button 

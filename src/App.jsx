@@ -6,7 +6,7 @@ import Login from "./pages/auth/login/Loginpage";
 import Signuppage from "./pages/auth/signup/Signuppage";
 import DashBoard from "./student/DashBoard";
 import Queries from "./student/Queries";
-import Wishlist from "./student/Wishlist";
+import MyQueries from "./student/MyQueries";
 import AQueries from "./Alumni/Queries";
 import Alumni from "./Admin/Alumni";
 import Companies from "./Admin/companies";
@@ -29,8 +29,12 @@ const App = () => {
             element={<Queries />}
           />
           <Route
-            path="/student/:studentId/wishlist"
-            element={<Wishlist />}
+            path="/student/:studentId/queries"
+            element={<Queries />}
+          />
+          <Route
+            path="/student/:studentId/myqueries"
+            element={<MyQueries />}
           />
           <Route
             path="/alumni/:alumniId/queries"

@@ -9,6 +9,7 @@ const List = ({ handleDelete }) => {
     const companyIdFromUrl = location.pathname.split('/')[4]; // Extract company ID from URL
 
     useEffect(() => {
+        // Fetch queries for the given company ID
         const fetchQueries = async () => {
             try {
                 const response = await axios.get(`http://localhost:3004/company/${companyIdFromUrl}/queries`);
@@ -38,13 +39,12 @@ const List = ({ handleDelete }) => {
                         <tr>
                             <th scope="col" className="px-6 py-3">Query</th>
                             <th scope="col" className="px-6 py-3">Answers</th>
-                            <th scope="col" className="px-6 py-3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Array.isArray(queries) && queries.map((query, index) => (
                             <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td className="px-6 py-4">{query.queryText}</td>
+                                <td className="px-6 py-4 text-lg">{query.queryText}</td>
                                 <td className="px-6 py-4">
                                     {Array.isArray(query.answers) ? (
                                         <ul className="list-decimal list-inside">
@@ -55,15 +55,6 @@ const List = ({ handleDelete }) => {
                                     ) : (
                                         <p>No answers available</p>
                                     )}
-                                </td>
-                                <td className="px-6 py-4 text-right flex gap-4 justify-end">
-                                    <button
-                                        type="button"
-                                        className="font-medium text-red-600 dark:text-red-500 hover:underline"
-                                        onClick={() => handleDelete(query.queryText)}
-                                    >
-                                        <img className="h-6 w-6" src="https://www.svgrepo.com/show/494410/delete.svg" alt="Delete" />
-                                    </button>
                                 </td>
                             </tr>
                         ))}
