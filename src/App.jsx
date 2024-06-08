@@ -22,15 +22,15 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signuppage />} />
           <Route
-            path="/student/dashboard"
+            path="/student/:studentId/dashboard"
             element={<DashBoard />}
           />
           <Route
-            path="/student/queries"
+            path="/student/:studentId/queries/:companyId"
             element={<Queries />}
           />
           <Route
-            path="/student/wishlist"
+            path="/student/:studentId/wishlist"
             element={<Wishlist />}
           />
           <Route

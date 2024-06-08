@@ -24,11 +24,29 @@ const Login = () => {
         password,
       });
 
-      const { token, ...user } = response.data;
+      console.log('Login response:', response.data); // Logging the response data
+
+      const { token, student, alumni, admin } = response.data;
+      let userId;
+      let user;
+
+      if (userType === 'Student') {
+        userId = student._id;
+        user = student;
+      } else if (userType === 'Alumni') {
+        userId = alumni._id;
+        user = alumni;
+      } else if (userType === 'Admin') {
+        userId = admin._id;
+        user = admin;
+      }
+
+      console.log('User ID:', userId); // Logging user ID
 
       localStorage.setItem('token', token);
       localStorage.setItem('userType', userType);
 
+      // Dispatch loginUser action with user details
       dispatch(loginUser({ user, token, type: `${userType.toLowerCase()}/login` }));
 
       if (userType === 'Admin') {
@@ -36,7 +54,8 @@ const Login = () => {
       } else if (userType === 'Alumni') {
         navigate('/alumni/dashboard');
       } else {
-        navigate('/student/dashboard');
+        // Redirect to student dashboard with student ID
+        navigate(`/student/${userId}/dashboard`);
       }
     } catch (err) {
       if (err.response) {
