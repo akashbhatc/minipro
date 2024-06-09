@@ -20,6 +20,15 @@ const Students = () => {
     fetchStudents();
   }, []);
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3004/admin/student/${id}/remove`);
+      setStudents(students.filter(student => student._id !== id));
+    } catch (error) {
+      console.error('Error deleting student:', error);
+    }
+  };
+
   return (
     <>
       <div>
@@ -28,7 +37,7 @@ const Students = () => {
       <div className="p-4 sm:ml-64">
         <div className="grid grid-cols-1 gap-4">
           <h1 className="text-2xl font-bold text-gray-700">Students</h1>
-          <List students={students} />
+          <List students={students} onDelete={handleDelete} />
         </div>
       </div>
     </>
