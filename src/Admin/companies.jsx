@@ -31,10 +31,10 @@ const Companies = () => {
             </div>
             <div className="p-4 sm:ml-64">
                 <div className="grid grid-cols-1 gap-4">
-                  <div className='p-4'>
-                    <AddCompany onAddCompany={handleAddCompany} />
+                    <div className='p-4'>
+                        <AddCompany onAddCompany={handleAddCompany} />
                     </div>
-                    <CompanyList companies={companies} />
+                    <CompanyList companies={companies} setCompanies={setCompanies} />
                 </div>
             </div>
         </>

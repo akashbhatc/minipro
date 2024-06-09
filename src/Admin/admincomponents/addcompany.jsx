@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const AddCompany = ({ onAddCompany }) => {
   const [companyName, setCompanyName] = useState('');
   const [location, setLocation] = useState('');
-  const userId = useSelector(state => state.auth.user?._id); 
+  const formRef = useRef(null);
+  const userId = useSelector(state => state.auth.user?._id);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,13 +20,15 @@ const AddCompany = ({ onAddCompany }) => {
       onAddCompany(company);
       setCompanyName('');
       setLocation('');
+      formRef.current.reset();
+      window.location.reload();
     } catch (error) {
       console.error('Error adding company:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="mb-6">
       <input
         type="text"
         value={companyName}
