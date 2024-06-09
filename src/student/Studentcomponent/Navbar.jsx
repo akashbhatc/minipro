@@ -9,7 +9,6 @@ export const Navbar = ({ loggedInUserId }) => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Extracting userIdfromUrl from the URL
   const userIdfromUrl = location.pathname.split('/')[2];
 
   const toggleSidebar = () => {

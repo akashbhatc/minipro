@@ -6,14 +6,12 @@ import { useLocation } from 'react-router-dom';
 const MyList = ({ loggedInUserId }) => {
     const [myQueries, setMyQueries] = useState([]);
     const location = useLocation();
-    const userIdFromUrl = location.pathname.split('/')[2]; // Extract user ID from URL
+    const userIdFromUrl = location.pathname.split('/')[2];
 
     useEffect(() => {
-        // Fetch queries for the given user ID
         const fetchQueries = async () => {
             try {
                 const response = await axios.get(`http://localhost:3004/student/${userIdFromUrl}/queries`);
-                // Filter queries where the query user ID matches the logged-in user ID
                 const filteredQueries = response.data.filter(query => query.userId === loggedInUserId);
                 setMyQueries(filteredQueries);
             } catch (error) {
@@ -27,7 +25,6 @@ const MyList = ({ loggedInUserId }) => {
     const handleDelete = async (queryId) => {
         try {
             await axios.delete(`http://localhost:3004/student/${userIdFromUrl}/queries/${queryId}/remove`);
-            // Remove the deleted query from the state
             setMyQueries(myQueries.filter(query => query._id !== queryId));
         } catch (error) {
             console.error('Error deleting query:', error);

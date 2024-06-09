@@ -8,7 +8,7 @@ export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const userid = location.pathname.split('/')[2]; // Extract user ID from URL
+  const userid = location.pathname.split('/')[2];
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

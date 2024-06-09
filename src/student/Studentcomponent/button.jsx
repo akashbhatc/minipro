@@ -14,9 +14,8 @@ const App = () => {
   };
 
   const handleSubmit = (companyId, query) => {
-    // Handle your form submission here
     console.log(`Company ID: ${companyId}, Query: ${query}`);
-    closeModal(); // Close modal after submission
+    closeModal();
   };
 
   return (

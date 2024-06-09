@@ -8,7 +8,7 @@ const List = () => {
   const [selectedQuery, setSelectedQuery] = useState(null);
   const [queries, setQueries] = useState([]);
   const location = useLocation();
-  const userId = location.pathname.split("/")[2]; // Extract user ID from URL
+  const userId = location.pathname.split("/")[2]; 
 
   useEffect(() => {
     const fetchQueries = async () => {

@@ -7,9 +7,8 @@ const Modal = ({ username, queryId, closeModal, onSubmit }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // Make a POST request to submit the answer
             const response = await axios.post(`http://localhost:3004/alumni/${username}/answer`, {
-                queryId: queryId, // Pass queryId to the backend
+                queryId: queryId,
                 answerText: answer
             });
             console.log('Submitted answer:', response.data.newAnswer);

@@ -5,7 +5,7 @@ const CompanyList = ({ companies, userIdFromUrl }) => {
     const navigate = useNavigate();
 
     const handleButtonClick = (companyId) => {
-        navigate(`/student/${userIdFromUrl}/queries/${companyId}`); // Use userIdFromUrl
+        navigate(`/student/${userIdFromUrl}/queries/${companyId}`);
     };
 
     return (

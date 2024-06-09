@@ -6,10 +6,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const List = ({ handleDelete }) => {
     const [queries, setQueries] = useState([]);
     const location = useLocation();
-    const companyIdFromUrl = location.pathname.split('/')[4]; // Extract company ID from URL
+    const companyIdFromUrl = location.pathname.split('/')[4];
 
     useEffect(() => {
-        // Fetch queries for the given company ID
         const fetchQueries = async () => {
             try {
                 const response = await axios.get(`http://localhost:3004/company/${companyIdFromUrl}/queries`);

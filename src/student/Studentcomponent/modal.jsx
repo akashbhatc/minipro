@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 
 const Modal = ({ onSubmit, onClose }) => {
   const [query, setQuery] = useState('');
   const [companyId, setCompanyId] = useState(null);
-  const [userId, setUserId] = useState(null); // State to store user ID
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Extract company ID from URL
     const url = window.location.href;
     const companyIdFromUrl = url.split('/').pop();
     setCompanyId(companyIdFromUrl);
-
-    // Extract user ID from URL
-    const userIdFromUrl = url.split('/')[4]; // Assuming user ID is the 4th segment in the URL
+    const userIdFromUrl = url.split('/')[4];
     setUserId(userIdFromUrl);
   }, []);
 
@@ -31,11 +28,9 @@ const Modal = ({ onSubmit, onClose }) => {
         userId: userId
       });
       
-      console.log('Query submitted:', response.data); // Log response
-      // Optionally, you can handle success, show a message, or close the modal here
+      console.log('Query submitted:', response.data);
     } catch (error) {
       console.error('Error submitting query:', error);
-      // Handle error if needed
     }
   };
 

@@ -7,12 +7,12 @@ import CompanyList from './Studentcomponent/companylist';
 const Companies = () => {
     const [companies, setCompanies] = useState([]);
     const navigate = useNavigate();
-    const { studentId } = useParams(); // Get userIdFromUrl from URL params
+    const { studentId } = useParams();
 
     useEffect(() => {
         async function fetchCompanies() {
             try {
-                console.log(studentId); // Check if userIdFromUrl is received correctly
+                console.log(studentId); 
                 const response = await axios.get(`http://localhost:3004/student/${studentId}/company`);
                 setCompanies(response.data);
             } catch (error) {
@@ -22,7 +22,7 @@ const Companies = () => {
         }
 
         fetchCompanies();
-    }, [studentId, navigate]); // studentId and navigate are dependencies
+    }, [studentId, navigate]); 
 
     return (
         <>
@@ -31,7 +31,6 @@ const Companies = () => {
             </div>
             <div className="p-4 sm:ml-64">
                 <div className="grid grid-cols-1 gap-4">
-                    {/* Pass userIdFromUrl to CompanyList */}
                     <CompanyList companies={companies} userIdFromUrl={studentId} />
                 </div>
             </div>
